@@ -49,8 +49,8 @@
                        label="新闻简称">
       </el-table-column>
 
-      <el-table-column prop="newsName"
-                       label="新闻描述">
+      <el-table-column prop="newsDesc"
+                       label="新闻内容">
       </el-table-column>
 
       <el-table-column    v-if='user.userRole===1' label="操作">
@@ -98,10 +98,10 @@
                             placeholder="请输入新闻简称"></el-input>
                 </el-form-item>
 
-                <el-form-item label="赛事描述"
+                <el-form-item label="新闻内容"
                               prop="newsDesc">
                   <el-input v-model.number="formWarn.newsDesc"
-                            placeholder="请输入赛事描述"></el-input>
+                            placeholder="请输入新闻内容"></el-input>
                 </el-form-item>
 
               </el-form>
@@ -138,10 +138,10 @@
                     placeholder="新闻名称"></el-input>
         </el-form-item>
 
-        <el-form-item label="新闻描述"
+        <el-form-item label="新闻内容"
                       prop="newsDesc">
           <el-input v-model.number="formWarn.newsDesc"
-                    placeholder="新闻描述"></el-input>
+                    placeholder="新闻内容"></el-input>
         </el-form-item>
 
 
@@ -448,6 +448,7 @@ export default {
   created() {
     let vm = this
     vm.user = JSON.parse(vm.getCookie('user'))
+    vm.getPageData()
     //vm.getReadyData()
   },
   destroyed() {

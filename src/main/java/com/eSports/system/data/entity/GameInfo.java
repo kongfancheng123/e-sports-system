@@ -23,5 +23,9 @@ public class GameInfo {
      * 赛事时间
      */
     private Date gameTime;
+    /**
+     * 赛事比分
+     */
+    private String gameScore;
 
 }

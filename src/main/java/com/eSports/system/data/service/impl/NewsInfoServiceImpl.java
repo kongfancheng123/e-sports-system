@@ -42,4 +42,9 @@ public class NewsInfoServiceImpl implements NewsInfoService {
     public NewsInfo selectByid(Integer id) {
         return newsInfoDao.selectByid(id);
     }
+
+    @Override
+    public List<NewsInfo> selectLike(NewsInfo newsInfo) {
+        return newsInfoDao.selectLike(newsInfo);
+    }
 }

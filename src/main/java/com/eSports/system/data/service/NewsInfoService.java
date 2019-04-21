@@ -1,5 +1,6 @@
 package com.eSports.system.data.service;
 
+import com.eSports.system.data.entity.GameInfo;
 import com.eSports.system.data.entity.NewsInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -47,4 +48,9 @@ public interface NewsInfoService {
      * 根据id进行查找历史数据
      */
     NewsInfo selectByid(Integer id);
+
+    /**
+     * 模糊查询
+     */
+    List<NewsInfo> selectLike(NewsInfo newsInfo);
 }

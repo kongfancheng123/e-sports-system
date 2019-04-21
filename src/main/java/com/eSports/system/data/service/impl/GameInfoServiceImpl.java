@@ -42,4 +42,9 @@ public class GameInfoServiceImpl implements GameInfoService {
     public GameInfo selectByid(Integer id) {
         return gameInfoDao.selectByid(id);
     }
+
+    @Override
+    public List<GameInfo> selectLike(GameInfo gameInfo) {
+        return gameInfoDao.selectLike(gameInfo);
+    }
 }

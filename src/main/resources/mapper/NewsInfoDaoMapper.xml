@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.eSports.system.data.entity.NewsInfo">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="news_name" jdbcType="VARCHAR" property="newsName"/>
-        <result column="news_desc" jdbcType="VARCHAR" property="newsDesc"/>
+        <result column="news_desc" jdbcType="CLOB" property="newsDesc"/>
     </resultMap>
 
     <insert id="insertNewsInfo" parameterType="com.eSports.system.data.entity.NewsInfo">
@@ -65,6 +65,13 @@
     <select id="selectByid" resultMap="BaseResultMap">
         select * from ess_news_info
         where id=#{id}
+    </select>
+
+    <select id="selectLike" resultMap="BaseResultMap">
+        select * from ess_news_info
+        <if test="newsInfo.newsName != null">
+            where news_name LIKE #{newsInfo.newsName}
+        </if>
     </select>
 
 

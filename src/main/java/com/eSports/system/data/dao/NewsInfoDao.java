@@ -1,5 +1,6 @@
 package com.eSports.system.data.dao;
 
+import com.eSports.system.data.entity.GameInfo;
 import com.eSports.system.data.entity.NewsInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -49,4 +50,8 @@ public interface NewsInfoDao {
      * 根据id进行查找历史数据
      */
     NewsInfo selectByid(Integer id);
+    /**
+     * 模糊查询
+     */
+    List<NewsInfo> selectLike(@Param("newsInfo") NewsInfo newsInfo);
 }

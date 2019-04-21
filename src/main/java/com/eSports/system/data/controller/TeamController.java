@@ -46,11 +46,13 @@ public class TeamController {
     public WebResponse selectByTeamInfo(@RequestBody SelectByTeamInfoQo selectByTeamInfoQo) {
         Integer pageNow = selectByTeamInfoQo.getPageNow();
         Integer pageSize = selectByTeamInfoQo.getPageSize();
-        Integer countNums = teamInfoService.selectAll().size();
         TeamInfo teamInfo=new TeamInfo();
-        teamInfo.setTeamName(selectByTeamInfoQo.getTeamName()==""?null:selectByTeamInfoQo.getTeamName());
+        if(selectByTeamInfoQo.getTeamName()!=null){
+            teamInfo.setTeamName(selectByTeamInfoQo.getTeamName()==""?null:"%"+selectByTeamInfoQo.getTeamName()+"%");
+        }
+        Integer countNums = teamInfoService.selectLike(teamInfo).size();
         PageHelper.startPage(pageNow, pageSize);
-        List<TeamInfo> teamInfos = teamInfoService.selectByTeamInfo(teamInfo);
+        List<TeamInfo> teamInfos = teamInfoService.selectLike(teamInfo);
         PageBean<TeamInfo> pageData = new PageBean<>(pageNow, pageSize, countNums);
         pageData.setItems(teamInfos);
 

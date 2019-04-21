@@ -53,6 +53,10 @@
                        label="战队描述">
       </el-table-column>
 
+      <el-table-column prop="teamMembers"
+                       label="战队成员">
+      </el-table-column>
+
 
       <el-table-column   v-if='user.userRole===1'   label="操作">
         <template slot-scope="scope">
@@ -105,6 +109,12 @@
                             placeholder="请输入战队描述"></el-input>
                 </el-form-item>
 
+                <el-form-item label="战队成员"
+                              prop="teamMembers">
+                  <el-input v-model.number="formWarn.teamMembers"
+                            placeholder="请输入战队成员"></el-input>
+                </el-form-item>
+
               </el-form>
 
       <div slot="footer"
@@ -143,6 +153,12 @@
                       prop="teamDesc">
           <el-input v-model.number="formWarn.teamDesc"
                     placeholder="战队描述"></el-input>
+        </el-form-item>
+
+        <el-form-item label="战队成员"
+                      prop="teamMembers">
+          <el-input v-model.number="formWarn.teamMembers"
+                    placeholder="战队成员"></el-input>
         </el-form-item>
 
       </el-form>
@@ -201,7 +217,8 @@ export default {
       formWarn: {
         id: null, // 类型：Number  必有字段  备注：事件码
         teamName: null, // 类型：Number  必有字段  备注：事件类型
-        teamDesc: null
+        teamDesc: null,
+        teamMembers: null
       },
       // 当前页码
       currentPage: 4,
@@ -387,6 +404,7 @@ export default {
       vm.formWarn.id = row.id
       vm.formWarn.teamName = row.teamName
       vm.formWarn.teamDesc = row.teamDesc
+      vm.formWarn.teamMembers = row.teamMembers
 
       // 0:遥测 1:遥信 不是这两个，则不能发送
       vm.dialog.warnFlag = true
@@ -448,6 +466,7 @@ export default {
   created() {
     let vm = this
     vm.user = JSON.parse(vm.getCookie('user'))
+    vm.getPageData()
     //vm.getReadyData()
   },
   destroyed() {

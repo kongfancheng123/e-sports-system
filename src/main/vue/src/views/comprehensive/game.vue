@@ -57,6 +57,10 @@
                        label="赛事时间">
       </el-table-column>
 
+      <el-table-column prop="gameScore"
+                       label="赛事比分">
+      </el-table-column>
+
       <el-table-column   v-if='user.userRole===1'  label="操作">
         <template slot-scope="scope">
 
@@ -108,6 +112,12 @@
                             placeholder="请输入赛事描述"></el-input>
                 </el-form-item>
 
+                <el-form-item label="赛事比分"
+                              prop="gameScore">
+                  <el-input v-model.number="formWarn.gameScore"
+                            placeholder="请输入赛事比分"></el-input>
+                </el-form-item>
+
                 <el-form-item label="赛事时间"
                               prop="gameTime">
                   <el-date-picker v-model="formWarn.gameTime"
@@ -154,6 +164,12 @@
                       prop="gameDesc">
           <el-input v-model.number="formWarn.gameDesc"
                     placeholder="赛事描述"></el-input>
+        </el-form-item>
+
+        <el-form-item label="赛事比分"
+                      prop="gameScore">
+          <el-input v-model.number="formWarn.gameScore"
+                    placeholder="赛事比分"></el-input>
         </el-form-item>
 
         <el-form-item label="赛事时间"
@@ -221,7 +237,8 @@ export default {
         id: null, // 类型：Number  必有字段  备注：事件码
         gameName: null, // 类型：Number  必有字段  备注：事件类型
         gameDesc: null, // 类型：Number  必有字段  备注：事件值
-        gameTime: null
+        gameTime: null,
+        gameScore: null
       },
       // 当前页码
       currentPage: 4,
@@ -415,6 +432,7 @@ export default {
       vm.formWarn.gameName = row.gameName
       vm.formWarn.gameDesc = row.gameDesc
       vm.formWarn.gameTime = row.gameTime
+      vm.formWarn.gameScore = row.gameScore
 
       // 0:遥测 1:遥信 不是这两个，则不能发送
       vm.dialog.warnFlag = true
@@ -476,6 +494,7 @@ export default {
   created() {
     let vm = this
     vm.user = JSON.parse(vm.getCookie('user'))
+    vm.getPageData()
     //vm.getReadyData()
   },
   destroyed() {

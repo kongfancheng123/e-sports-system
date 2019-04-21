@@ -44,4 +44,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo selectByid(Integer id) {
         return userInfoDao.selectByid(id);
     }
+
+    @Override
+    public List<UserInfo> selectLike(UserInfo userInfo) {
+        return userInfoDao.selectLike(userInfo);
+    }
 }

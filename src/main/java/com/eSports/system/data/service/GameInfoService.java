@@ -46,4 +46,9 @@ public interface GameInfoService {
      * 根据id进行查找历史数据
      */
     GameInfo selectByid(Integer id);
+    /**
+     * 模糊查询
+     */
+    List<GameInfo> selectLike(GameInfo gameInfo);
+
 }

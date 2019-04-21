@@ -76,5 +76,12 @@
         where id=#{id}
     </select>
 
+    <select id="selectLike" resultMap="BaseResultMap">
+        select * from ess_user_info
+        <if test="userInfo.userName != null">
+            where user_name LIKE #{userInfo.userName}
+        </if>
+    </select>
+
 
 </mapper>

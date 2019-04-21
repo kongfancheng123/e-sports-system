@@ -42,4 +42,9 @@ public class TeamInfoServiceImpl implements TeamInfoService {
     public TeamInfo selectByid(Integer id) {
         return teamInfoDao.selectByid(id);
     }
+
+    @Override
+    public List<TeamInfo> selectLike(TeamInfo teamInfo) {
+        return teamInfoDao.selectLike(teamInfo);
+    }
 }

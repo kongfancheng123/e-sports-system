@@ -48,11 +48,13 @@ public class NewsController {
 
         Integer pageNow = selectByNewsInfoQo.getPageNow();
         Integer pageSize = selectByNewsInfoQo.getPageSize();
-        Integer countNums = newsInfoService.selectAll().size();
         NewsInfo newsInfo=new NewsInfo();
-        newsInfo.setNewsName(selectByNewsInfoQo.getNewsName()==""?null:selectByNewsInfoQo.getNewsName());
+        if(selectByNewsInfoQo.getNewsName()!=null){
+            newsInfo.setNewsName(selectByNewsInfoQo.getNewsName()==""?null:"%"+selectByNewsInfoQo.getNewsName()+"%");
+        }
+        Integer countNums = newsInfoService.selectLike(newsInfo).size();
         PageHelper.startPage(pageNow, pageSize);
-        List<NewsInfo> newsInfos = newsInfoService.selectByNewsInfo(newsInfo);
+        List<NewsInfo> newsInfos = newsInfoService.selectLike(newsInfo);
         PageBean<NewsInfo> pageData = new PageBean<>(pageNow, pageSize, countNums);
         pageData.setItems(newsInfos);
 

@@ -39,6 +39,7 @@ public class GameController {
             gameInfo.setGameName(addGameQo.getGameName());
             gameInfo.setGameDesc(addGameQo.getGameDesc());
             gameInfo.setGameTime(TimeUtil.stringToDate(addGameQo.getGameTime()));
+            gameInfo.setGameScore(addGameQo.getGameScore());
             Integer integer = gameInfoService.insertGameInfo(gameInfo);
             return WebResponse.success();
         } catch (Exception e) {
@@ -66,18 +67,21 @@ public class GameController {
 
         List<GameInfoVo> gameInfos=new ArrayList<>();
         GameInfo gameInfo=new GameInfo();
-        gameInfo.setGameName(selectByGameInfoQo.getGameName()==""?null:selectByGameInfoQo.getGameName());
+        if(selectByGameInfoQo.getGameName()!=null){
+            gameInfo.setGameName(selectByGameInfoQo.getGameName()==""?null:"%"+selectByGameInfoQo.getGameName()+"%");
+        }
         Integer pageNow = selectByGameInfoQo.getPageNow();
         Integer pageSize = selectByGameInfoQo.getPageSize();
-        Integer countNums = gameInfoService.selectAll().size();
+        Integer countNums = gameInfoService.selectLike(gameInfo).size();
         PageHelper.startPage(pageNow, pageSize);
-        List<GameInfo> gameInfos1 = gameInfoService.selectByGameInfo(gameInfo);
+        List<GameInfo> gameInfos1 = gameInfoService.selectLike(gameInfo);
         for(GameInfo gameInfo1:gameInfos1){
             GameInfoVo gameInfo2=new GameInfoVo();
             gameInfo2.setId(gameInfo1.getId());
             gameInfo2.setGameDesc(gameInfo1.getGameDesc());
             gameInfo2.setGameName(gameInfo1.getGameName());
             gameInfo2.setGameTime(TimeUtil.format(gameInfo1.getGameTime(),"yyyy-MM-dd HH:mm:ss"));
+            gameInfo2.setGameScore(gameInfo1.getGameScore());
             gameInfos.add(gameInfo2);
         }
         PageBean<GameInfoVo> pageData = new PageBean<>(pageNow, pageSize, countNums);
@@ -97,6 +101,7 @@ public class GameController {
             gameInfo.setGameName(updateGameQo.getGameName());
             gameInfo.setGameDesc(updateGameQo.getGameDesc());
             gameInfo.setGameTime(TimeUtil.stringToDate(updateGameQo.getGameTime()));
+            gameInfo.setGameScore(updateGameQo.getGameScore());
             Integer integer = gameInfoService.updateGameInfo(gameInfo);
             return WebResponse.success();
         } catch (Exception e) {

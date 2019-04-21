@@ -7,17 +7,20 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="team_name" jdbcType="VARCHAR" property="teamName"/>
         <result column="team_desc" jdbcType="VARCHAR" property="teamDesc"/>
+        <result column="team_members" jdbcType="VARCHAR" property="teamMembers"/>
     </resultMap>
 
     <insert id="insertTeamInfo" parameterType="com.eSports.system.data.entity.TeamInfo">
          insert into ess_team_info
         (
         team_name,
-        team_desc
+        team_desc,
+        team_members
         )values
             (
             #{teamInfo.teamName},
-            #{teamInfo.teamDesc}
+            #{teamInfo.teamDesc},
+            #{teamInfo.teamMembers}
             )
     </insert>
 
@@ -40,6 +43,9 @@
         <if test="teamInfo.teamDesc != null">
             and team_desc = #{teamInfo.teamDesc}
         </if>
+        <if test="teamInfo.teamMembers != null">
+            and team_members = #{teamInfo.teamMembers}
+        </if>
         order by id
     </select>
 
@@ -51,6 +57,9 @@
             </if>
             <if test="teamInfo.teamDesc != null">
                 team_desc = #{teamInfo.teamDesc},
+            </if>
+            <if test="teamInfo.teamMembers != null">
+                team_members = #{teamInfo.teamMembers},
             </if>
         </set>
         WHERE id=#{teamInfo.id}
@@ -65,6 +74,13 @@
     <select id="selectByid" resultMap="BaseResultMap">
         select * from ess_team_info
         where id=#{id}
+    </select>
+
+    <select id="selectLike" resultMap="BaseResultMap">
+        select * from ess_team_info
+        <if test="teamInfo.teamName != null">
+            where team_name LIKE #{teamInfo.teamName}
+        </if>
     </select>
 
 

@@ -17,4 +17,8 @@ public class AddGameQo {
      * 赛事时间
      */
     private String gameTime;
+    /**
+     * 赛事比分
+     */
+    private String gameScore;
 }

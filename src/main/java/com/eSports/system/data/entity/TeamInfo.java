@@ -16,4 +16,8 @@ public class TeamInfo {
      * 战队信息
      */
     private String teamDesc;
+    /**
+     * 战队成员
+     */
+    private String teamMembers;
 }

@@ -449,6 +449,7 @@ export default {
   created() {
     let vm = this
     vm.user = JSON.parse(vm.getCookie('user'))
+    vm.getPageData()
     //vm.getReadyData()
   },
   destroyed() {

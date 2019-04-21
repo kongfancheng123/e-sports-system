@@ -1,6 +1,7 @@
 package com.eSports.system.data.service;
 
 import com.eSports.system.data.entity.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -46,4 +47,8 @@ public interface UserInfoService {
      * 根据id进行查找历史数据
      */
     UserInfo selectByid(Integer id);
+    /**
+     * 模糊查询
+     */
+    List<UserInfo> selectLike(UserInfo userInfo);
 }

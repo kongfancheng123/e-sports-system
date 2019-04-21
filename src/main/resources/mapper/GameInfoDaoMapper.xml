@@ -8,6 +8,7 @@
         <result column="game_name" jdbcType="VARCHAR" property="gameName"/>
         <result column="game_desc" jdbcType="VARCHAR" property="gameDesc"/>
         <result column="game_time" jdbcType="TIMESTAMP" property="gameTime"/>
+        <result column="game_score" jdbcType="TIMESTAMP" property="gameScore"/>
     </resultMap>
 
     <insert id="insertGameInfo" parameterType="com.eSports.system.data.entity.GameInfo">
@@ -15,12 +16,14 @@
         (
         game_name,
         game_desc,
-        game_time
+        game_time,
+        game_score
         )values
             (
             #{gameInfo.gameName},
             #{gameInfo.gameDesc},
-            #{gameInfo.gameTime}
+            #{gameInfo.gameTime},
+            #{gameInfo.gameScore}
             )
     </insert>
 
@@ -46,6 +49,9 @@
         <if test="gameInfo.gameTime != null">
             and game_time = #{gameInfo.gameTime}
         </if>
+        <if test="gameInfo.gameScore != null">
+            and game_score = #{gameInfo.gameScore}
+        </if>
         order by id
     </select>
 
@@ -61,6 +67,9 @@
             <if test="gameInfo.gameTime != null">
                 game_time = #{gameInfo.gameTime},
             </if>
+            <if test="gameInfo.gameScore != null">
+                game_score = #{gameInfo.gameScore},
+            </if>
         </set>
         WHERE id=#{gameInfo.id}
 
@@ -74,6 +83,13 @@
     <select id="selectByid" resultMap="BaseResultMap">
         select * from ess_game_info
         where id=#{id}
+    </select>
+
+    <select id="selectLike" resultMap="BaseResultMap">
+        select * from ess_game_info
+        <if test="gameInfo.gameName != null">
+            where game_name LIKE #{gameInfo.gameName}
+        </if>
     </select>
 
 
