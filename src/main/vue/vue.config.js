@@ -44,9 +44,9 @@ module.exports = {
   devServer: {
     port: 9008, // 端口
     // host: '',
-    host: '192.168.10.117', // IP
+    host: '127.0.0.1', // IP
     open: true, // 自动打开浏览器
-    proxy: 'http://192.168.10.117:8088'
+    proxy: 'http://127.0.0.1:8088'
     // proxy: {
     //   '/api': {
     //     target: 'http://192.168.52.50:8080',
