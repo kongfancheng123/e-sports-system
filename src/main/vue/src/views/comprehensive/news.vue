@@ -49,17 +49,21 @@
                        label="新闻简称">
       </el-table-column>
 
-      <el-table-column prop="newsDesc"
+      <!--<el-table-column prop="newsDesc"
                        label="新闻内容">
-      </el-table-column>
+      </el-table-column>-->
 
-      <el-table-column    v-if='user.userRole===1' label="操作">
+      <el-table-column     label="操作">
         <template slot-scope="scope">
 
-          <el-button size="mini"
+          <el-button size="mini"  v-if='user.userRole===1'
                      @click="warnEvent(scope.$index, scope.row,'更新',0)">更新</el-button>
 
+
           <el-button size="mini"
+                     @click="warnEvent1(scope.$index, scope.row,'更新',0)">查看新闻内容</el-button>
+
+          <el-button size="mini"  v-if='user.userRole===1'
                      type="danger"
                      @click="deleteNews(scope.$index, scope.row,'更新',0)">删除</el-button>
 
@@ -100,7 +104,7 @@
 
                 <el-form-item label="新闻内容"
                               prop="newsDesc">
-                  <el-input v-model.number="formWarn.newsDesc"
+                  <el-input v-model.number="formWarn.newsDesc" type="textarea" autosize
                             placeholder="请输入新闻内容"></el-input>
                 </el-form-item>
 
@@ -140,7 +144,7 @@
 
         <el-form-item label="新闻内容"
                       prop="newsDesc">
-          <el-input v-model.number="formWarn.newsDesc"
+          <el-input v-model.number="formWarn.newsDesc"  type="textarea" autosize
                     placeholder="新闻内容"></el-input>
         </el-form-item>
 
@@ -154,6 +158,38 @@
         <el-button type="primary"
                    size="small"
                    @click="warnSumit('formWarn')">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--弹出层：查看新闻 -->
+    <el-dialog :title="title"
+               width="600px"
+               :visible.sync="dialog.warnFlag1">
+      <el-form :model="formWarn"
+               size="small"
+               :rules="rules"
+               ref="formWarn"
+               label-width="100px">
+
+        <el-form-item label="新闻名称"
+                      prop="newsName">
+          <el-input v-model.number="formWarn.newsName" disabled
+                    placeholder="新闻名称"></el-input>
+        </el-form-item>
+
+        <el-form-item label="新闻内容"
+                      prop="newsDesc">
+          <el-input v-model.number="formWarn.newsDesc"  type="textarea" autosize  disabled
+                    placeholder="新闻内容"></el-input>
+        </el-form-item>
+
+
+      </el-form>
+
+      <div slot="footer"
+           class="dialog-footer">
+        <el-button @click="dialog.warnFlag1 = false"
+                   size="small">关 闭</el-button>
       </div>
     </el-dialog>
 
@@ -177,6 +213,7 @@ export default {
       dialog: {
         sendFlag: false,
         warnFlag: false,
+        warnFlag1: false,
       },
       title: null,
       // 表格数据
@@ -391,6 +428,17 @@ export default {
       // 0:遥测 1:遥信 不是这两个，则不能发送
       vm.dialog.warnFlag = true
     },
+    warnEvent1(index, row, txt, num) {
+      let vm = this
+      vm.title = txt
+      vm.formWarn.id = row.id
+      vm.formWarn.newsName = row.newsName
+      vm.formWarn.newsDesc = row.newsDesc
+
+      // 0:遥测 1:遥信 不是这两个，则不能发送
+      vm.dialog.warnFlag1 = true
+    },
+
     /* 更新新闻
        03：warnSumit 提交发送报警表单
       */
